@@ -1,9 +1,18 @@
 
 # Stockholm street names
 
-This project is an exploration of Stokholm street names. I decided to look into the streets named after Swedish provinces (landspkap) and check whether streets' location in the city corresponds to where the provinces are in the country. 
+This project is an exploration of Stockholm street names. I decided to look into the streets named after Swedish provinces (landskap) and check whether streets' location in the city corresponds to where the provinces are in the country. 
 
 I stared by researching the question, taking each province and checking where its street is located. Since the story moved between different parts of the city, I felt that scrollitelling map was a suitable way to present it. Plus, I wanted to make a scrollitelling piece for way too long.
+
+These are the project steps, which are described in more detail below. 
+1. [Creating the basic scollytelling map](#Creating-the-basic-scollytelling-map)
+2. [Getting the data from OSM Overpass API]()
+3. [Cleaning the data with Mapshaper console and GeoJson.io]()
+4. [Adding data to the Mapbox map]()
+5. [Styling the webpage]()
+6. [Moving between different map layers]()
+7. [Publishing and sharing with Github Pages]()
 
 ## Creating the basic scollytelling map
 To make the map I used the template by Mapbox and followed the directions in [this article]( https://blog.mapbox.com/how-to-build-a-scrollytelling-map-ead6baf2cd1b). 
@@ -17,7 +26,7 @@ To make the map I used the template by Mapbox and followed the directions in [th
 4. When I opened index.html everything was working! Now, I needed to do some modifications to the basemap in order to highlight the streets that I am mentioning in the text.
 
 ## Getting the data from OSM Overpass API
-In order to visualize the streets on the map I need to get a file that contains line geometries. The most natural place for this is OpenStreetMap's Overpass API. Initially I wanted to write the API call in Python and have everything as automated as possible, but got stuck and decided to follow a simpler path for this project.
+In order to visualise the streets on the map I need to get a file that contains line geometries. The most natural place for this is OpenStreetMap's Overpass API. Initially I wanted to write the API call in Python and have everything as automated as possible, but got stuck and decided to follow a simpler path for this project.
 
 I went to overpass-turbo.eu and searched for "street" in the wizard to get the template query. 
 ```
@@ -36,7 +45,7 @@ The original search was:
 out body;>;
 out skel qt;
 ```
-This query will only output highways with tag "primary". To get all the streets and roads regardless of their type, I removed the tag `way["highway"]({{bbox}})` This, however, returned sidewalks as separate lines next to the street itself, which is too much unneccessary junk. One option to solve the problem was to include most common highway tags into the query. 
+This query will only output highways with tag "primary". To get all the streets and roads regardless of their type, I removed the tag `way["highway"]({{bbox}})` This, however, returned sidewalks as separate lines next to the street itself, which is too much unnecessary junk. One option to solve the problem was to include most common highway tags into the query. 
 
 But how do I get the data for multiple tags at the same time? [Overpass API documentation](https://wiki.openstreetmap.org/wiki/Overpass_API/Language_Guide#Usage_examples:_Simple_queries_for_tags_and_bounding_boxes) is really good and provides examples for all sorts of edge cases.  Under the section "One or another name" I found the following syntax that did the trick. 
 `way["highway" ~ "primary|secondary|tertiary|residential"]({{bbox}});`
@@ -44,7 +53,7 @@ But how do I get the data for multiple tags at the same time? [Overpass API docu
 To get just the streets that I need, I could specify their names in the query like this `way["highway" ~ "primary|secondary|tertiary|residential"]["name"="Värmlandsvägen"]({{bbox}});` To include all the streets I need, I followed the same logic.
 `way["highway" ~ "primary|secondary|tertiary|residential"]["name"~"Värmlandsvägen|Västmannagatan|Västgötagatan|Upplandsgatan|Södermannagatan|Smålandsgatan|Skånegatan|Östgötagatan|Ölandsgatan|Norrlandsgatan|Närkesgatan|Hälsingegatan|Hallandsgatan|Gotlandsgatan|Gästrikegatan|Dalslandsgatan|Dalagatan|Bohusgatan|Blekingegatan"]({{bbox}});`
 
-So far the bounding box on my screen steers what area the query aplies to. It would be more robust and reusable if I could specify Stockholm as the area directly in the query. Overpass API documentation had the [answer](https://wiki.openstreetmap.org/wiki/Overpass_API/Language_Guide#Selecting_areas_by_name) for that as well.  Following the exmaple, I first specified the geocode area `{{geocodeArea:"Stockholm}}->.a;` and then used `(area.a)` intead of `({{bbox}})`. So, the final query looked likse this:
+So far the bounding box on my screen steers what area the query applies to. It would be more robust and reusable if I could specify Stockholm as the area directly in the query. Overpass API documentation had the [answer](https://wiki.openstreetmap.org/wiki/Overpass_API/Language_Guide#Selecting_areas_by_name) for that as well.  Following the example, I first specified the geocode area `{{geocodeArea:"Stockholm}}->.a;` and then used `(area.a)` instead of `({{bbox}})`. So, the final query looked like this:
 
 ```
 [out:json][timeout:25];
@@ -58,19 +67,19 @@ out skel qt;
 ```
 
 
-## Cleaning the data with Mapshaper and GeoJson.io  
+## Cleaning the data with Mapshaper console and GeoJson.io  
 When I got all the streets I needed from Overpass API, I exported the data as geojson. There were still a couple of things with the data that I wanted to clean up. 
 
-First of all, there were too many columns. Essentially, I just needed the geometry column and the street name. Mapshaper is a simple and poweful tool for manipulating geographic data. In Mapshaper you can do a lot of things: merge different datasets, simplify geometries to decrease file size, dissolve internal polygons to create an outline map. I found that ["Hands-on Data Visualization"](https://handsondataviz.org/) book by Jack Dougherty and Ilya Ilyankou has a really practical [chapter on Mapshaper](https://handsondataviz.org/mapshaper.html). Even though Mapshaper can do so much, I used it for a simple task of limiting the number of columns in my dataset, which can be done via the Mapshaper's console. `-filter-fields @id,name`
+First of all, there were too many columns. Essentially, I just needed the geometry column and the street name. Mapshaper is a simple and powerful tool for manipulating geographic data. In Mapshaper you can do a lot of things: merge different datasets, simplify geometries to decrease file size, dissolve internal polygons to create an outline map. I found that ["Hands-on Data Visualization"](https://handsondataviz.org/) book by Jack Dougherty and Ilya Ilyankou has a really practical [chapter on Mapshaper](https://handsondataviz.org/mapshaper.html). Even though Mapshaper can do so much, I used it for a simple task of limiting the number of columns in my dataset, which can be done via the Mapshaper's console. `-filter-fields @id,name`
 
-Second, some streets were represented by two lines (one for each lane), but it would make a better visualization if it was just one line per street. I used GeoJson.io to get rid of the duplicate lines and to connect road segments of the same street. By the way, "Hands-on Data Visualization" has a great [chapter about GeoJson.io](https://handsondataviz.org/geojsonio.html) too.
+Second, some streets were represented by two lines (one for each lane), but it would make a better visualisation if it was just one line per street. I used GeoJson.io to get rid of the duplicate lines and to connect road segments of the same street. By the way, "Hands-on Data Visualization" has a great [chapter about GeoJson.io](https://handsondataviz.org/geojsonio.html) too.
 
 ## Adding data to the Mapbox map
 Finally, the data is ready to be loaded into Mapbox! 
-In Mapbox Studio I created a new Monochrome style, added a new data visualization component and uploaded the dataset. Then, I styled the lines: applied one color to the "northern" streets, and another color to the "southern" streets. When I was happy with how things looked, I published the map and used its url in the config.js file.
+In Mapbox Studio I created a new Monochrome style, added a new data visualisation component and uploaded the dataset. Then, I styled the lines: applied one color to the "northern" streets, and another color to the "southern" streets. When I was happy with how things looked, I published the map and used its url in the config.js file.
 
 ## Styling the webpage
-To be frank, the template htlm did not look very inviting, so I wanted to customize it and create a larger floating panel for the title and the introduction. At first, I was not sure whether I need to style the title section or create a sepate chapter for it. It is usually handy to look at someone else's code to see how they have accompished a similar look. [Duncan Geere's scrollitelling piece for Possible](https://wearepossible.github.io/carfreestories/) was my inspiration, so I went to check his source code and found out that he styled the header in the following way: 
+To be frank, the template htlm did not look very inviting, so I wanted to customise it and create a larger floating panel for the title and the introduction. At first, I was not sure whether I need to style the title section or create a separate chapter for it. It is usually handy to look at someone else's code to see how they have accomplished a similar look. [Duncan Geere's scrollitelling piece for Possible](https://wearepossible.github.io/carfreestories/) was my inspiration, so I went to check his source code and found out that he styled the header in the following way: 
 - set the max-width of the "header" id to, say, `margin-top: 700px;
 - added a margin on top: `margin-top: 15vh;`
 - added some padding around the text. `padding: 6vh 3vw;`
@@ -79,7 +88,7 @@ I saw "vh" and "vw" for the first time. Apparently "vh stands for **viewport hei
 ## Final touches
 The story is both about city's and country's geography, so it would be great to have small maps of Sweden in every chapter to illustrate where the related provinces are located. I found a geojson with province borders on github and created small choropleth maps in Tableau that I later exported as images. To add labels I used Figma in order to have more control over where the labels would be placed.
 
-In the last two chapters I am talking about two streets that are located right next to each other. To make the story clearer it would be better if the second street appeared only when it is mentioned in the text. Mapbox scrollitelling tutorial mentions how you can make layers (in)visible bu using the onChapterEnter and onChapterExit attributes in the config.js. 
+In the last two chapters I am talking about two streets that are located right next to each other. To make the story clearer it would be better if the second street appeared only when it is mentioned in the text. Mapbox scrollitelling tutorial mentions how you can make layers (in)visible by using the onChapterEnter and onChapterExit attributes in the config.js. 
 To make it work I had to go back to Mapbox Studio and create two additional layers with just one street that I wanted to show on the fly - one layer for the line and one layer for the label. The opacity of those layers was set to 0 so that they would be hidden initially.  
 When the viewer enters the last chapter my hidden layers should appear. So, in the last chapter of the config.js I added the following lines:
 ```
@@ -97,7 +106,7 @@ It is also possible to hide the layer again when the viewers scrolls back up, bu
 
 
 ## Publishing and sharing with Github Pages
-When I was ready to share the project, I pushed all the files to a github repo and created a webpage with the help of Github Pages. Though it would have been a better practice to use git continuously throughout the project. Anyways, this project was a good motivation to re-learn how to use git in command line. So here are the steps I went through:
+When I was ready to share the project, I pushed all the files to a github repo and created a webpage with the help of Github Pages. Though it would have been a better practice to use git continuously throughout the project. Anyway, this project was a good motivation to re-learn how to use git in command line. So here are the steps I went through:
 
 Set up a local repository.
 This steps sets up git on your local machine and allows you to track changes in the files.

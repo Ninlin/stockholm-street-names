@@ -5,17 +5,17 @@ var config = {
     markerColor: '#3FB1CE',
     theme: 'light',
     use3dTerrain: false,
-    title: '',
-    subtitle: 'Knowing Swedish geography might help you orient in Stockholm',
-    byline: 'Someone once told me that you can guess where in Stockholm a street is located just by hearing its name. If a street bears a name of a southern or northern province, then it is located south or north of the city center respectively. I decided to make a quick check of whether this is true. \n\n\n Indeed, in 1885 there was a major street name revision that intentionally used “de södra landskapen” (southern provinces) and “de norra landskapen” (northern provinces) as a theme for streets south and north of the city center. There are some curious inconsistencies however. ',
-    footer: 'Source: Stahre, Nils-Gustaf; Fogelström, Per Anders (2005). Stockholms gatunamn. \n\n Created by Nina Lindell using Mapbox, OpenstreetMap, Geojson.io, Mapshaper, Tableau and Figma',
+    title: 'Navigating in Stockholm',
+    subtitle: 'Can you guess where in Stockholm a street is located just based on its name?',
+    byline: 'Someone once told me that if a street bears a name of a southern province, then it is located south of the city center. And that the same is true for provinces north of Stockholm. I decided to make a quick check of whether this is true. \n\n Scroll to learn more.',
+    footer: 'Source: Stahre, Nils-Gustaf; Fogelström, Per Anders (2005). Stockholms gatunamn. \nCreated by Nina Lindell using Mapbox, OpenstreetMap, Geojson.io, Mapshaper, Tableau and Figma',
     chapters: [
         {
             id: 'intro',
-            alignment: 'center',
-            hidden: true,
+            alignment: 'left',
+            hidden: false,
             title: '',
-            description: '',
+            description: 'Indeed, in 1885 there was a major street name revision that intentionally used “de södra landskapen” (southern provinces) and “de norra landskapen” (northern provinces) as a theme for streets south and north of the city center. There are some curious inconsistencies however.',
             image: '',
             location: {
                 center: [18.06288, 59.33593],
@@ -92,7 +92,7 @@ var config = {
             hidden: false,
             title: '',
             image: 'smaland.png',
-            description: 'Confusingly, Smålandsgatan exists north of the city center. It already existed during the 1885 naming revision. Historians suggest that “Smålandsgatan” got its name not from the province on Småland, but from the name of the baker Jochum Småhl who used to own property on that street.',
+            description: 'Confusingly, Smålandsgatan is located north of the city center. It already existed during the 1885 naming revision. Historians suggest that “Smålandsgatan” got its name not from the province of Småland, but from the name of the baker Jochum Småhl who used to own property on that street.',
             location: {
                 center: [18.07219, 59.33373],
                 zoom: 17.40,
