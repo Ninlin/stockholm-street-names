@@ -76,7 +76,7 @@ To be frank, the template htlm did not look very inviting, so I wanted to custom
 - added some padding around the text. `padding: 6vh 3vw;`
 I saw "vh" and "vw" for the first time. Apparently "vh stands for **viewport height** and vw is for **viewport width**. Hence, setting an element to a width value of 50vw means that the element will have a width that's 50% of the viewport size, and this stays true when the viewport is resized." That seems handy for responsive webpages.
 
-### Final touches
+## Final touches
 The story is both about city's and country's geography, so it would be great to have small maps of Sweden in every chapter to illustrate where the related provinces are located. I found a geojson with province borders on github and created small choropleth maps in Tableau that I later exported as images. To add labels I used Figma in order to have more control over where the labels would be placed.
 
 In the last two chapters I am talking about two streets that are located right next to each other. To make the story clearer it would be better if the second street appeared only when it is mentioned in the text. Mapbox scrollitelling tutorial mentions how you can make layers (in)visible bu using the onChapterEnter and onChapterExit attributes in the config.js. 
@@ -96,5 +96,28 @@ When the viewer enters the last chapter my hidden layers should appear. So, in t
 It is also possible to hide the layer again when the viewers scrolls back up, but it was not relevant for my case. 
 
 
-When the html was ready
-- Publish to github and enable pages. Assuming that you have a github account and have git installed 	on your machine. 
+## Publishing and sharing with Github Pages
+When I was ready to share the project, I pushed all the files to a github repo and created a webpage with the help of Github Pages. Though it would have been a better practice to use git continuously throughout the project. Anyways, this project was a good motivation to re-learn how to use git in command line. So here are the steps I went through:
+
+Set up a local repository.
+This steps sets up git on your local machine and allows you to track changes in the files.
+- Open Terminal and navigate to the folder containing all project files. You can either set the directory in Terminal, or right-click on the folder on Mac and select "New Terminal at Folder", which will open Terminal within the right directory. 
+- set global user name `git config --global user.name "yourusername"`
+- set global user password (not your github password, but your access token, which can be created in Settings/Developer settings/Personal access token) `git config --global user.password "youraccesstoken"`
+- Initialise git in the project folder `git init`
+- Add all files `git add`
+- Commit all files and add a message `git commit -a -m "Initial commit"`
+
+Create a Github repo and push the local files there.
+This step is about publishing your local project with all its changes and commits to Github. 
+- Create a new public repository on github.io. 
+- Connect the remote github repository `git remote add origin https://github.com/Ninlin/stockholm-street-names.git`. To check that the remote repo is connected `git remote -v`
+- Push the local files to the remote repo `git push -u origin master`
+- Terminal will ask for your github username and password (token). If you get a 403 error that says "Permission to ... denied", it might be that your access token does not have the right scope set up. On Github go to Settings/Developer settings/Personal access token. Open your token and select "repo" scope. Click "Update token". Now all the project files are in the repository. 
+
+Set up Github pages
+This step allows us to share the webpage with others.
+- Go to repository Settings/Pages
+- Set master branch as a source
+- After saving you will get the link to your page. The link will start working after several minutes. 
+
