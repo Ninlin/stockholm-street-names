@@ -7,18 +7,18 @@ I stared by researching the question, taking each province and checking where it
 
 These are the project steps, which are described in more detail below. 
 1. [Creating the basic scollytelling map](#Creating-the-basic-scollytelling-map)
-2. [Getting the data from OSM Overpass API]()
-3. [Cleaning the data with Mapshaper console and GeoJson.io]()
-4. [Adding data to the Mapbox map]()
-5. [Styling the webpage]()
-6. [Moving between different map layers]()
-7. [Publishing and sharing with Github Pages]()
+2. [Getting the data from OSM Overpass API](#Getting-the-data-from-OSM-Overpass-API)
+3. [Cleaning the data with Mapshaper console and GeoJson.io](#Cleaning-the-data-with-Mapshaper-console-and-GeoJson.io)
+4. [Adding data to the Mapbox map](#Adding-data-to-the-Mapbox-map)
+5. [Styling the webpage](#Styling-the-webpage)
+6. [Moving between different map layers](#final-touches)
+7. [Publishing and sharing with Github Pages](#Publishing-and-sharing-with-Github-Pages)
 
 ## Creating the basic scollytelling map
 To make the map I used the template by Mapbox and followed the directions in [this article]( https://blog.mapbox.com/how-to-build-a-scrollytelling-map-ead6baf2cd1b). 
 
 1. Before getting into the details I wrote the story itself and split it into chapters. 
-2. I downloaded the scrollitelling template from the [github repository](https://github.com/mapbox/storytelling)
+2. I downloaded the scrollitelling template from the [github repository.](https://github.com/mapbox/storytelling)
 	As Mapbox themselves put it, the template contains two files:
 	- A story content file (_config.js_). This JSON-formatted text file includes story copy, location information, and settings to control how the map & story are displayed. This is what the storyteller edits.
 	- A map story file (_index.html_). This HTML file reads information from the content file and dynamically builds out the story and map controls. This is what the reader sees.
@@ -108,8 +108,8 @@ It is also possible to hide the layer again when the viewers scrolls back up, bu
 ## Publishing and sharing with Github Pages
 When I was ready to share the project, I pushed all the files to a github repo and created a webpage with the help of Github Pages. Though it would have been a better practice to use git continuously throughout the project. Anyway, this project was a good motivation to re-learn how to use git in command line. So here are the steps I went through:
 
-Set up a local repository.
-This steps sets up git on your local machine and allows you to track changes in the files.
+1. Set up a local repository.
+This step sets up git on your local machine and allows you to track changes in the files.
 - Open Terminal and navigate to the folder containing all project files. You can either set the directory in Terminal, or right-click on the folder on Mac and select "New Terminal at Folder", which will open Terminal within the right directory. 
 - set global user name `git config --global user.name "yourusername"`
 - set global user password (not your github password, but your access token, which can be created in Settings/Developer settings/Personal access token) `git config --global user.password "youraccesstoken"`
@@ -117,14 +117,14 @@ This steps sets up git on your local machine and allows you to track changes in 
 - Add all files `git add`
 - Commit all files and add a message `git commit -a -m "Initial commit"`
 
-Create a Github repo and push the local files there.
+2. Create a Github repo and push the local files there.
 This step is about publishing your local project with all its changes and commits to Github. 
 - Create a new public repository on github.io. 
 - Connect the remote github repository `git remote add origin https://github.com/Ninlin/stockholm-street-names.git`. To check that the remote repo is connected `git remote -v`
 - Push the local files to the remote repo `git push -u origin master`
 - Terminal will ask for your github username and password (token). If you get a 403 error that says "Permission to ... denied", it might be that your access token does not have the right scope set up. On Github go to Settings/Developer settings/Personal access token. Open your token and select "repo" scope. Click "Update token". Now all the project files are in the repository. 
 
-Set up Github pages
+3. Set up Github pages
 This step allows us to share the webpage with others.
 - Go to repository Settings/Pages
 - Set master branch as a source
