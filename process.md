@@ -8,7 +8,7 @@ I stared by researching the question, taking each province and checking where it
 These are the project steps, which are described in more detail below. 
 1. [Creating the basic scollytelling map](#Creating-the-basic-scollytelling-map)
 2. [Getting the data from OSM Overpass API](#Getting-the-data-from-OSM-Overpass-API)
-3. [Cleaning the data with Mapshaper console and GeoJson.io](#Cleaning-the-data-with-Mapshaper-console-and-GeoJson.io)
+3. [Cleaning the data with Mapshaper console and GeoJson.io](#Cleaning-the-data-with-Mapshaper-console-and-GeoJson-io)
 4. [Adding data to the Mapbox map](#Adding-data-to-the-Mapbox-map)
 5. [Styling the webpage](#Styling-the-webpage)
 6. [Moving between different map layers](#final-touches)
